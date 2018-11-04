@@ -24,6 +24,10 @@ class Centrifugo
      * @var Response
      */
     protected $lastResponse;
+    /**
+     * @var bool
+     */
+    protected $isSecure;
 
     /**
      * Centrifugo constructor.
@@ -31,12 +35,14 @@ class Centrifugo
      * @param string $endpoint
      * @param string $secret
      * @param ClientInterface $client
+     * @param bool $isSecure
      */
-    public function __construct($endpoint, $secret, ClientInterface $client)
+    public function __construct($endpoint, $secret, ClientInterface $client, $isSecure = true)
     {
         $this->endpoint = $endpoint;
         $this->secret = $secret;
         $this->client = $client;
+        $this->isSecure = $isSecure;
     }
 
     /**
@@ -49,7 +55,7 @@ class Centrifugo
      */
     public function request($method, array $params = [])
     {
-        return new Request($this->endpoint, $this->secret, $method, $params);
+        return new Request($this->endpoint, $this->secret, $method, $params, $this->isSecure);
     }
 
     /**

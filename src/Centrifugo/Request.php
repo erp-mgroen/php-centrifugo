@@ -24,6 +24,10 @@ class Request
      * @var array
      */
     protected $params;
+    /**
+     * @var bool
+     */
+    protected $isSecure;
 
     /**
      * Request constructor.
@@ -33,12 +37,13 @@ class Request
      * @param string $method
      * @param array $params
      */
-    public function __construct($endpoint, $secret, $method, array $params)
+    public function __construct($endpoint, $secret, $method, array $params, bool $isSecure = true)
     {
         $this->endpoint = $endpoint;
         $this->secret = $secret;
         $this->method = $method;
         $this->params = $params;
+        $this->isSecure = $isSecure;
     }
 
     /**
@@ -71,6 +76,14 @@ class Request
     public function getEncodedParams()
     {
         return json_encode($this->toArray());
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsSecure()
+    {
+        return $this->isSecure;
     }
 
     /**
