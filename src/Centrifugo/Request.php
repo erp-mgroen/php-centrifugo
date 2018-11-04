@@ -81,6 +81,7 @@ class Request
         return [
             'Content-Type: application/json',
             'X-API-Sign: ' . $this->generateHashSign(),
+            'Authorization: apikey ' . $this->secret,
         ];
     }
 
