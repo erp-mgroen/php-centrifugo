@@ -202,12 +202,15 @@ class Centrifugo
      */
     public function generateChannelSign($client, $channel, $info = '')
     {
-        $ctx = hash_init('sha256', HASH_HMAC, $this->secret);
-        hash_update($ctx, $client);
-        hash_update($ctx, $channel);
-        hash_update($ctx, $info);
+        $params = ['sub' => $user];
 
-        return hash_final($ctx);
+        if ($timestamp) {
+            $params['exp'] = $timestamp;
+        }
+
+        $token = JWT::encode($params, $this->secret);
+
+        return $token;
     }
 
     /**
