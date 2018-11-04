@@ -180,12 +180,15 @@ class Centrifugo
      */
     public function generateClientToken($user, $timestamp, $info = '')
     {
-        $ctx = hash_init('sha256', HASH_HMAC, $this->secret);
-        hash_update($ctx, $user);
-        hash_update($ctx, $timestamp);
-        hash_update($ctx, $info);
+        $params = ['sub' => $user];
 
-        return hash_final($ctx);
+        if ($timestamp) {
+            $params['exp'] = $timestamp;
+        }
+
+        $token = JWT::encode($params, $this->secret);
+
+        return $token;
     }
 
     /**
