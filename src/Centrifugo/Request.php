@@ -91,15 +91,4 @@ class Request
     {
         return ['method' => $this->method, 'params' => $this->params];
     }
-
-    /**
-     * @return string
-     */
-    protected function generateHashSign()
-    {
-        $ctx = hash_init('sha256', HASH_HMAC, $this->secret);
-        hash_update($ctx, $this->getEncodedParams());
-
-        return hash_final($ctx);
-    }
 }
