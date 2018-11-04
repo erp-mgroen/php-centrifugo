@@ -43,6 +43,9 @@ class HttpClient extends BaseClient
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POST           => true,
             ]);
+            
+            curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 0);
 
             $rawResponse = curl_exec($connection);
 
